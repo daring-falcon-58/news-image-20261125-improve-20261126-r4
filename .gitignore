@@ -1,0 +1,11 @@
+out/
+kit/
+kit-download.tar.gz
+photos/
+compose.py
+entry-300px.png
+HEARTBEAT.md
+SUBMIT-READY.md
+transcripts.tar.gz
+muse-usage.jsonl
+prompt.txt
