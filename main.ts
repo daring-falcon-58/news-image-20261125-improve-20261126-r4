@@ -12,9 +12,14 @@ mkdirSync(outDir, { recursive: true });
 const src = new URL('./entry.png', import.meta.url);
 const dest = join(outDir, 'entry.png');
 copyFileSync(src, dest);
-// Write-back self-check: the output must be byte-identical to the source.
-if (!readFileSync(dest).equals(readFileSync(src))) {
-  throw new Error('entry.png copy mismatch: output bytes differ from source');
+// Write-back self-check: read the output back in binary and assert its
+// bytes equal the source entry.png bytes; fail loudly if they differ.
+const written = readFileSync(dest);
+const expected = readFileSync(src);
+if (!written.equals(expected)) {
+  throw new Error(
+    `entry.png copy mismatch: wrote ${written.length} bytes, expected ${expected.length} bytes from source`,
+  );
 }
 // Gate guard: the judged file must stay inside the competition's 1 MiB limit.
 if (statSync(dest).size > 1048576) {
